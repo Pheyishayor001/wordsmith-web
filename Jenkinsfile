@@ -10,7 +10,7 @@ pipeline {
     stage('Push')  {
       steps {
         echo 'pushing image to dockerhub'
-        sh 'docker tag wordsmithWebImage pheyishayor001/wordsmithwebimage'
+        sh 'docker tag wordsmithwebimage pheyishayor001/wordsmithwebimage'
         sh 'docker login -u="pheyishayor001" -p="simplepass"'
         sh 'docker push pheyishayor001/wordsmithwebimage'
       }
