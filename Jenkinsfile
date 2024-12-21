@@ -28,7 +28,7 @@ pipeline {
     stage('Build docker image') {
       steps {
         echo 'Building the wordsmith API application...'
-        sh 'docker build -t wordsmithwebimage .'
+        sh 'docker build -t wordsmithwebimg .'
       }
     }
     stage('Push image to dockerhub')  {
