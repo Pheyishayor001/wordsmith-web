@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  tools {
+      go 'myGo'
+    }
   stages {
     stage('scan files') {
       steps {
