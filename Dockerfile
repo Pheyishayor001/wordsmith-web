@@ -7,16 +7,6 @@ WORKDIR /app
 # Copy the project files
 COPY . .
 
-# Initialize and tidy Go module dependencies
-RUN go mod init wordsmith
-RUN go mod tidy
-
-# Build the Go application with a specific output name
-RUN go build -o wordsmith dispatcher.go
-
-# Debug: Check if the binary exists
-RUN ls -l /app
-
 EXPOSE 80
 
 # Keep the container running for inspection
