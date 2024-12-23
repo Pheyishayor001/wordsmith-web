@@ -14,7 +14,7 @@ pipeline {
         echo 'Scaning files with sonar-scanner'
         withSonarQubeEnv('new_sonar_scanner') {
         sh '''
-        sonar-scanner \
+        /opt/sonar-scanner/bin/sonar-scanner \
             -Dsonar.projectKey=goProjectScan \
             -Dsonar.sources=. \
             -Dsonar.host.url=http://52.207.232.87:9000 \
