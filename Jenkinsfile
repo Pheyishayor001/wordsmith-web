@@ -7,6 +7,14 @@ pipeline {
     stage('scan files') {
       steps {
         echo 'Scaning files with sonar-scanner'
+        sh '''
+        sonar-scanner \
+            -Dsonar.projectKey=goProjectScan \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=http://52.207.232.87:9000 \
+            -Dsonar.login=sqp_ea3e5b74153b863bb3ce8fc8b6db943d1d03a736
+
+        '''
         
       }
     }
