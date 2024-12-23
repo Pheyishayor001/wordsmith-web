@@ -2,7 +2,7 @@ pipeline {
   agent any
   tools {
       go 'myGo'
-      sonarQube 'new_sonar_scanner'
+      sonarQube 'SonarQube Scanner 6.2.1.4610'
     }
   environment {
         // Define SonarQube server and token
