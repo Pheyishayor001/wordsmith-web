@@ -3,10 +3,15 @@ pipeline {
   tools {
       go 'myGo'
     }
+  environment {
+        // Define SonarQube server and token
+        SONARQUBE_SERVER = 'new_sonar_scanner'
+    }
   stages {
     stage('scan files') {
       steps {
         echo 'Scaning files with sonar-scanner'
+        withSonarQubeEnv('new_sonar_scanner') {
         sh '''
         sonar-scanner \
             -Dsonar.projectKey=goProjectScan \
@@ -15,7 +20,7 @@ pipeline {
             -Dsonar.login=sqp_ea3e5b74153b863bb3ce8fc8b6db943d1d03a736
 
         '''
-        
+        }
       }
     }
     stage('build artifact') {
