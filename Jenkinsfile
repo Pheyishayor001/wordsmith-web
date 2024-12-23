@@ -2,6 +2,7 @@ pipeline {
   agent any
   tools {
       go 'myGo'
+      sonarQube 'go_sonar_scanner'
     }
   environment {
         // Define SonarQube server and token
