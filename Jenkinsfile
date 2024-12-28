@@ -14,11 +14,11 @@ pipeline {
         echo 'Scaning files with sonar-scanner'
         withSonarQubeEnv('new_sonar_scanner') {
         sh '''
-        /opt/sonar-scanner/bin/sonar-scanner \
-            -Dsonar.projectKey=goProjectScan \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=http://52.207.232.87:9000 \
-            -Dsonar.login=sqp_ea3e5b74153b863bb3ce8fc8b6db943d1d03a736
+        sonar-scanner \
+          -Dsonar.projectKey=goProjectScan \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=http://18.234.175.158:9000 \
+          -Dsonar.login=sqp_963818367940ddf1af777b08e5685c5ed43f03b2
 
         '''
         }
