@@ -6,19 +6,21 @@ pipeline {
     }
   environment {
         // Define SonarQube server and token
-        SONARQUBE_SERVER = 'new_sonar_scanner'
+        //SONARQUBE_SERVER = 'new_sonar_scanner'
+        SONAR_HOST_URL = 'http://18.234.175.158:9000'
     }
   stages {
     stage('scan files') {
       steps {
         echo 'Scaning files with sonar-scanner'
-        withSonarQubeEnv('new_sonar_scanner') {
+        //withSonarQubeEnv('new_sonar_scanner')
+       withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
         sh '''
         /opt/sonar-scanner/bin/sonar-scanner \
           -Dsonar.projectKey=goProjectScan \
           -Dsonar.sources=. \
-          -Dsonar.host.url=http://18.234.175.158:9000 \
-          -Dsonar.login=sqp_963818367940ddf1af777b08e5685c5ed43f03b2
+          -Dsonar.host.url=$SONAR_HOST_URL \
+          -Dsonar.login=$SONAR_TOKEN
 
         '''
         }
