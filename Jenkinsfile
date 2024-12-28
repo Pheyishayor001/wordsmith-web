@@ -4,11 +4,11 @@ pipeline {
       go 'myGo'
       // sonarQube 'sonar-scanner_install'
     }
-  environment {
+  //environment {
         // Define SonarQube server and token
         //SONARQUBE_SERVER = 'new_sonar_scanner'
        
-    }
+    //}
   stages {
     stage('scan files') {
       steps {
