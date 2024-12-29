@@ -38,13 +38,14 @@ pipeline {
     }
     stage('Push to nexus') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'nexus_login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        withCredentials([usernamePassword(credentialsId: 'nexus_login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'),
+                        string(credentialsId: 'nexus-host-url', variable: 'NEXUS_HOST_URL')]) {
                 echo 'Pushing image to nexus artifactory...' 
                 // Example build command
                 sh '''
                    curl -u "$USERNAME:$PASSWORD" \
                      --upload-file ./wordsmith \
-                         http://172.31.18.163:8081/repository/wordsmith-go-artifact/
+                         $NEXUS_HOST_URL/repository/wordsmith-go-artifact/
                 '''
             }
         
