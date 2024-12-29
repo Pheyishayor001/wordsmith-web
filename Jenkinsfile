@@ -27,12 +27,10 @@ pipeline {
     stage('build artifact') {
       steps {
         echo 'Building the artifact'
-        sh '''
-        ls -l
+        sh '''        
         go mod init wordsmith
         go mod tidy
-        go build -o wordsmith dispatcher.go
-        ls -l
+        go build -o wordsmith dispatcher.go        
         '''
       }
     }
