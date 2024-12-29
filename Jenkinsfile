@@ -58,7 +58,7 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Deploying the application'
-        sh 'ssh -o StrictHostKeyChecking=no -i "../network.pem" ec2-user@54.146.134.165 -t "docker ps -aq | xargs docker rm -f; docker run -d -p 80:80 pheyishayor001/wordsmithwebimg:${BUILD_ID}"'
+        sh 'ssh -o StrictHostKeyChecking=no -i "../network.pem" ec2-user@3.88.165.82 -t "docker ps -aq | xargs docker rm -f; docker run -d -p 80:80 pheyishayor001/wordsmithwebimg:${BUILD_ID}"'
       }
     }
   }
