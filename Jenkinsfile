@@ -8,7 +8,7 @@ pipeline {
     stage('scan files') {
       steps {
         echo 'Scaning files with sonar-scanner'
-        //withSonarQubeEnv('new_sonar_scanner')
+        
        withCredentials([
          string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN'),
          string(credentialsId: 'sonar-host-url', variable: 'SONAR_HOST_URL')
@@ -36,7 +36,16 @@ pipeline {
     }
     stage('Push to nexus') {
       steps {
-        echo 'Pushing image to nexus artifactory...'        
+        withCredentials([usernamePassword(credentialsId: 'nexus_login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                echo 'Pushing image to nexus artifactory...' 
+                // Example build command
+                sh '''
+                   curl -u '$USERNAME:$PASSWORD' \
+                     --upload-file ./wordsmith \
+                         http://54.161.93.194:8081/repository/go-binaries/wordsmith-web-1.0.0
+                '''
+            }
+        
       }
     }
     stage('Build docker image') {
@@ -47,18 +56,20 @@ pipeline {
     }
     stage('Push image to dockerhub')  {
       steps {
+        withCredentials([usernamePassword(credentialsId: 'docker_login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
         echo 'pushing image to dockerhub'
         sh '''
         docker tag wordsmithwebimg pheyishayor001/wordsmithwebimg:${BUILD_ID}
-        docker login -u="pheyishayor001" -p="simplepass"
+        docker login -u="$USERNAME" -p="$PASSWORD"
         docker push pheyishayor001/wordsmithwebimg:${BUILD_ID}       
         '''
+        }
       }
     }
     stage('Deploy') {
       steps {
         echo 'Deploying the application'
-        sh 'ssh -o StrictHostKeyChecking=no -i "../network.pem" ec2-user@3.88.165.82 -t "docker ps -aq | xargs docker rm -f; docker run -d -p 80:80 pheyishayor001/wordsmithwebimg:${BUILD_ID}"'
+        sh 'ssh -o StrictHostKeyChecking=no -i "../network.pem" ec2-user@44.201.103.223 -t "docker ps -aq | xargs docker rm -f; docker run -d -p 80:80 pheyishayor001/wordsmithwebimg:${BUILD_ID}"'
       }
     }
   }
