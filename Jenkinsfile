@@ -42,7 +42,7 @@ pipeline {
                 sh '''
                    curl -u '$USERNAME:$PASSWORD' \
                      --upload-file ./wordsmith \
-                         http://54.161.93.194:8081/repository/go-binaries/wordsmith-web-1.0.0
+                         http://34.229.10.108:8081/repository/go_artifact-proxy/
                 '''
             }
         
