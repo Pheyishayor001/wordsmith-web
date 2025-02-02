@@ -10,7 +10,7 @@ pipeline {
         echo 'Scaning files with sonar-scanner'
         
        withCredentials([
-         string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN'),
+         string(credentialsId: 'sonar-token-web', variable: 'SONAR_TOKEN_WEB'),
          string(credentialsId: 'sonar-host-url', variable: 'SONAR_HOST_URL')
         ]) {
         sh '''
@@ -18,7 +18,7 @@ pipeline {
           -Dsonar.projectKey=wordsmith-web-scan \
           -Dsonar.sources=. \
           -Dsonar.host.url=$SONAR_HOST_URL \
-          -Dsonar.login=sqp_0a61796937a9d3b30548ab2a56fe431745e10ab8
+          -Dsonar.login=$SONAR_TOKEN_WEB
 
         '''
         }
@@ -70,7 +70,7 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Deploying the application'
-        sh 'ssh -o StrictHostKeyChecking=no -i "../network.pem" ec2-user@172.31.93.239 -t "docker ps -aq | xargs docker rm -f; docker run -d -p 80:80 pheyishayor001/wordsmithwebimg:${BUILD_ID}"'
+        // sh 'ssh -o StrictHostKeyChecking=no -i "../network.pem" ec2-user@172.31.93.239 -t "docker ps -aq | xargs docker rm -f; docker run -d -p 80:80 pheyishayor001/wordsmithwebimg:${BUILD_ID}"'
       }
     }
   }
