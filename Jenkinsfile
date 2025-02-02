@@ -15,10 +15,10 @@ pipeline {
         ]) {
         sh '''
         /opt/sonar-scanner/bin/sonar-scanner \
-          -Dsonar.projectKey=goProjectScan \
+          -Dsonar.projectKey=wordsmith-web-scan \
           -Dsonar.sources=. \
           -Dsonar.host.url=$SONAR_HOST_URL \
-          -Dsonar.login=$SONAR_TOKEN
+          -Dsonar.login=sqp_0a61796937a9d3b30548ab2a56fe431745e10ab8
 
         '''
         }
